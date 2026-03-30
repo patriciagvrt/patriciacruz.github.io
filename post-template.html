@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post Title — Patricia Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1916; --ink-mid: #4a4845; --ink-soft: #6b6864; --ink-faint: #9e9b97;
+    --cream: #faf8f4; --cream-2: #f2ede4; --rule: #ddd8ce;
+    --teal: #1b5e50; --teal-mid: #2a8a76; --teal-pale: #e4f0ec; --teal-border: #b2d4cc;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--rule); padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* BREADCRUMB */
+  .breadcrumb { max-width: 720px; margin: 0 auto; padding: 1.25rem 2rem 0; display: flex; align-items: center; gap: 0.5rem; }
+  .breadcrumb a { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--teal); }
+  .breadcrumb span { font-family: var(--mono); font-size: 0.65rem; color: var(--rule); }
+  .breadcrumb .current { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+
+  /* POST HEADER */
+  .post-header { max-width: 720px; margin: 0 auto; padding: 2.5rem 2rem 2rem; border-bottom: 1px solid var(--rule); }
+  .post-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .post-tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); background: var(--teal-pale); border: 1px solid var(--teal-border); padding: 3px 9px; border-radius: 2px; }
+  .post-date-label { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
+  .post-read-time { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-faint); letter-spacing: 0.08em; }
+
+  .post-title { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 1rem; }
+  .post-title em { font-style: italic; color: var(--teal); }
+
+  .post-subtitle { font-family: var(--serif); font-size: 1.2rem; font-style: italic; color: var(--ink-mid); line-height: 1.4; margin-bottom: 1.5rem; font-weight: 400; }
+
+  .post-byline { display: flex; align-items: center; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+  .byline-initial { width: 36px; height: 36px; border-radius: 50%; background: var(--teal); color: white; font-family: var(--serif); font-size: 1rem; font-style: italic; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .byline-info { display: flex; flex-direction: column; gap: 0.1rem; }
+  .byline-name { font-size: 0.85rem; font-weight: 500; color: var(--ink); }
+  .byline-role { font-size: 0.75rem; color: var(--ink-faint); }
+
+  /* POST BODY */
+  .post-body { max-width: 720px; margin: 0 auto; padding: 3rem 2rem; }
+
+  /* Typography for article content */
+  .post-body p { font-size: 1rem; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.5rem; font-weight: 300; }
+  .post-body p:first-child { font-size: 1.08rem; color: var(--ink); font-weight: 400; }
+  .post-body h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; color: var(--ink); margin: 2.5rem 0 1rem; line-height: 1.25; letter-spacing: -0.01em; }
+  .post-body h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 2rem 0 0.75rem; }
+  .post-body em { font-style: italic; }
+  .post-body strong { font-weight: 500; color: var(--ink); }
+  .post-body a { color: var(--teal); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .post-body a:hover { color: var(--teal-mid); }
+  .post-body ul, .post-body ol { margin: 0 0 1.5rem 1.5rem; }
+  .post-body li { font-size: 1rem; line-height: 1.75; color: var(--ink-mid); margin-bottom: 0.4rem; font-weight: 300; }
+
+  /* Pull quote */
+  .pull-quote { border-left: 3px solid var(--teal); padding: 0.75rem 0 0.75rem 1.5rem; margin: 2rem 0; }
+  .pull-quote p { font-family: var(--serif); font-size: 1.25rem; font-style: italic; color: var(--ink); line-height: 1.5; margin: 0; font-weight: 400; }
+  .pull-quote cite { display: block; margin-top: 0.5rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); font-style: normal; }
+
+  /* Footnote / aside */
+  .post-aside { background: var(--cream-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+  .post-aside .aside-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; display: block; }
+  .post-aside p { font-size: 0.85rem; color: var(--ink-soft); margin: 0; line-height: 1.65; font-weight: 300; }
+
+  /* Separator */
+  .post-sep { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+  /* POST FOOTER */
+  .post-footer { max-width: 720px; margin: 0 auto; padding: 0 2rem 3rem; }
+  .post-footer-inner { border-top: 2px solid var(--ink); padding-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .post-tags-section p { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; }
+  .post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .post-tags span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; border: 1px solid var(--rule); color: var(--ink-soft); background: var(--cream-2); }
+  .post-nav-section { text-align: right; }
+  .post-nav-section p { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; }
+  .post-nav-section a { font-family: var(--serif); font-size: 0.95rem; color: var(--teal); text-decoration: none; font-style: italic; }
+  .post-nav-section a:hover { text-decoration: underline; }
+
+  /* BACK LINK */
+  .back-home { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); text-decoration: none; margin-bottom: 1.5rem; transition: color 0.2s; }
+  .back-home:hover { color: var(--teal); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--rule); padding: 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { display: flex; flex-direction: column; gap: 0.1rem; }
+  .footer-name { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-mid); font-weight: 500; }
+  .footer-sub { font-family: var(--serif); font-size: 0.78rem; color: var(--ink-faint); font-style: italic; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--teal); }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .post-header, .post-body, .post-footer, .breadcrumb { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .post-footer-inner { grid-template-columns: 1fr; }
+    .post-nav-section { text-align: left; }
+    footer { flex-direction: column; gap: 1rem; padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Patricia Cruz</a>
+  <ul class="nav-links">
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="index.html#writing">Writing</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span>/</span>
+  <a href="index.html#writing">Writing</a>
+  <span>/</span>
+  <span class="current">Post title here</span>
+</div>
+
+<!-- POST HEADER -->
+<header class="post-header">
+  <div class="post-meta">
+    <span class="post-tag">Essay</span>
+    <!-- Change tag to: Essay / Reflection / Practice / Research -->
+    <span class="post-date-label">Month DD, YYYY</span>
+    <span class="post-read-time">· 5 min read</span>
+  </div>
+
+  <h1 class="post-title">
+    What does it mean to learn <em>with</em> an AI, not from one?
+  </h1>
+  <!-- CHANGE THIS: replace with your post title -->
+
+  <p class="post-subtitle">
+    A reflection on the difference between using AI as a tutor and using it as a thinking partner.
+  </p>
+  <!-- CHANGE THIS: optional subtitle / deck sentence -->
+
+  <div class="post-byline">
+    <div class="byline-initial">P</div>
+    <div class="byline-info">
+      <span class="byline-name">Patricia Cruz</span>
+      <span class="byline-role">MSc Computational Social Science · Linköping University</span>
+    </div>
+  </div>
+</header>
+
+<!-- POST BODY -->
+<article class="post-body">
+
+  <!-- OPENING PARAGRAPH — slightly larger, sets the scene -->
+  <p>
+    There is a difference between asking someone for an answer and thinking out loud with them. The first is efficient; the second is generative. When I started using large language models in my own studies, I noticed something uncomfortable: I kept treating them like a search engine with better grammar. I was asking for answers. I was not thinking.
+  </p>
+
+  <!-- SECTION HEADING -->
+  <h2>The question behind the question</h2>
+
+  <p>
+    Most of the discourse around AI in education centres on what students <em>get</em> from AI — explanations, feedback, summaries. But there is a more interesting question: what does the act of interacting with AI <em>do</em> to a student's thinking? Does it scaffold cognition, or does it short-circuit it?
+  </p>
+
+  <p>
+    This is not a new tension. It mirrors debates about calculators, spell-checkers, and Wikipedia. But generative AI raises the stakes considerably, because it does not just provide information — it produces reasoning, and that reasoning can become a substitute for the student's own.
+  </p>
+
+  <!-- PULL QUOTE — use for a key idea you want to stand out -->
+  <div class="pull-quote">
+    <p>"The risk is not that students will use AI to cheat. It is that they will use it to think — and never notice they have stopped thinking for themselves."</p>
+    <cite>— Patricia Cruz</cite>
+  </div>
+
+  <h2>What "learning with" could mean</h2>
+
+  <p>
+    I want to propose a distinction. <strong>Learning from AI</strong> treats the system as an authority: the student poses a question, receives an answer, and updates their knowledge accordingly. This is efficient, but it is cognitively passive in a specific way — it does not require the student to generate hypotheses, notice contradictions, or struggle productively.
+  </p>
+
+  <p>
+    <strong>Learning with AI</strong>, by contrast, treats the system as an interlocutor: the student externalises their thinking, receives a response that challenges or extends it, and is pushed to refine their own position. The student remains the epistemic agent. The AI is a mirror, not an oracle.
+  </p>
+
+  <!-- ASIDE / NOTE BOX — for caveats, definitions, or related reading -->
+  <div class="post-aside">
+    <span class="aside-label">Research note</span>
+    <p>This distinction maps loosely onto Vygotsky's zone of proximal development — but the key question is whether AI interaction can genuinely function as scaffolding, or whether it removes the productive struggle that makes scaffolding effective.</p>
+  </div>
+
+  <h2>What I observed in my own work</h2>
+
+  <p>
+    In a data analysis course last semester, I began keeping logs of my conversations with a language model. Reading them back was revelatory — not because of what the AI said, but because of what I asked. The questions I posed early in a problem were vague and outcome-seeking. Later, as I understood more, they became sharper, more exploratory. The log became a record of my thinking, not just the AI's output.
+  </p>
+
+  <p>
+    This is the methodological intuition behind my current research interest: that AI interaction logs might function as a novel kind of cognitive artefact — a trace of reasoning that students and researchers could use to study learning in real time.
+  </p>
+
+  <hr class="post-sep">
+
+  <p>
+    I do not have conclusions yet. This is an essay, not a paper — a way of thinking in public about questions I am still working through. If this resonates with your own experience as a learner, educator, or researcher, I would genuinely like to hear from you.
+  </p>
+
+</article>
+
+<!-- POST FOOTER -->
+<div class="post-footer">
+  <div class="post-footer-inner">
+    <div class="post-tags-section">
+      <p>Topics</p>
+      <div class="post-tags">
+        <span>Metacognition</span>
+        <span>Agency</span>
+        <span>AI Literacy</span>
+        <span>Essay</span>
+      </div>
+    </div>
+    <div class="post-nav-section">
+      <p>Next post</p>
+      <a href="#">Notes on using generative AI in my own studies →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-name">Patricia Cruz</span>
+    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
