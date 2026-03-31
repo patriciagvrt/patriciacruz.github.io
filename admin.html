@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post Editor — Patricia Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1916; --ink-mid: #4a4845; --ink-soft: #6b6864; --ink-faint: #9e9b97;
+    --cream: #faf8f4; --cream-2: #f2ede4; --cream-3: #e8e2d8; --rule: #ddd8ce;
+    --teal: #1b5e50; --teal-mid: #2a8a76; --teal-pale: #e4f0ec; --teal-border: #b2d4cc;
+    --gold: #9a6b08; --gold-pale: #fdf3dc;
+    --red: #8b1a1a; --red-pale: #fdf0f0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: var(--sans); background: var(--cream-2); color: var(--ink); font-size: 15px; line-height: 1.6; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--ink); color: var(--cream);
+    height: 52px; padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 1rem; }
+  .topbar-logo { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--cream); text-decoration: none; }
+  .topbar-sep { color: rgba(255,255,255,0.2); font-size: 0.9rem; }
+  .topbar-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+  .btn {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 3px; cursor: pointer; border: none; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .btn-ghost { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.18); color: white; }
+  .btn-teal { background: var(--teal); color: white; }
+  .btn-teal:hover { background: var(--teal-mid); }
+  .btn-ink { background: var(--ink); color: white; border: 1px solid rgba(255,255,255,0.15); }
+  .btn-ink:hover { background: #2d2c28; }
+  .btn-light { background: var(--cream-2); color: var(--ink-mid); border: 1px solid var(--rule); }
+  .btn-light:hover { background: white; border-color: var(--teal-border); color: var(--teal); }
+  .btn-generate { background: var(--teal); color: white; font-size: 0.7rem; padding: 8px 18px; }
+  .btn-generate:hover { background: var(--teal-mid); }
+
+  /* ── TAB BAR ── */
+  .tabbar {
+    background: var(--cream); border-bottom: 1px solid var(--rule);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 0;
+  }
+  .tab {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.75rem 1.25rem; cursor: pointer; color: var(--ink-faint);
+    border-bottom: 2px solid transparent; transition: all 0.15s;
+  }
+  .tab:hover { color: var(--ink-mid); }
+  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  /* ── MAIN LAYOUT ── */
+  .editor-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: calc(100vh - 52px - 41px);
+  }
+
+  /* ── LEFT: EDITOR ── */
+  .editor-pane {
+    border-right: 1px solid var(--rule);
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+
+  .editor-pane.hidden { display: none; }
+
+  .editor-section {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .editor-section:last-child { border-bottom: none; flex: 1; }
+
+  .field-label {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .field-label .required { color: var(--teal); }
+  .field-hint { font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.3rem; line-height: 1.4; }
+
+  input[type="text"], input[type="date"], select, textarea {
+    width: 100%; background: white; border: 1px solid var(--rule);
+    border-radius: 3px; padding: 0.55rem 0.75rem;
+    font-family: var(--sans); font-size: 0.9rem; color: var(--ink);
+    outline: none; transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--teal-mid); box-shadow: 0 0 0 3px var(--teal-pale);
+  }
+  textarea { resize: vertical; line-height: 1.6; }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239e9b97' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2.2rem; cursor: pointer;
+  }
+
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    padding: 0.6rem 0.75rem; background: var(--cream-2);
+    border: 1px solid var(--rule); border-radius: 3px 3px 0 0;
+  }
+  .toolbar-btn {
+    font-family: var(--mono); font-size: 0.7rem; padding: 4px 9px;
+    border: 1px solid var(--rule); border-radius: 2px;
+    background: white; color: var(--ink-mid); cursor: pointer;
+    transition: all 0.12s; display: flex; align-items: center; gap: 4px;
+  }
+  .toolbar-btn:hover { background: var(--teal-pale); border-color: var(--teal-border); color: var(--teal); }
+  .toolbar-sep { width: 1px; background: var(--rule); margin: 2px 4px; }
+
+  #body-editor {
+    border-radius: 0 0 3px 3px;
+    border-top: none;
+    min-height: 320px;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    padding: 0.75rem;
+    white-space: pre-wrap;
+    resize: vertical;
+  }
+
+  /* ── RIGHT: PREVIEW ── */
+  .preview-pane {
+    overflow-y: auto;
+    background: var(--cream);
+  }
+
+  .preview-pane.fullwidth {
+    grid-column: 1 / -1;
+  }
+
+  .preview-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  /* Preview post styles */
+  .preview-eyebrow { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
+  .preview-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .preview-tag { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); background: var(--teal-pale); border: 1px solid var(--teal-border); padding: 2px 8px; border-radius: 2px; }
+  .preview-date { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
+  .preview-title { font-family: var(--serif); font-size: 2.2rem; font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 0.75rem; }
+  .preview-subtitle { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--ink-mid); margin-bottom: 1.5rem; line-height: 1.4; }
+  .preview-byline { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+  .preview-byline-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: white; font-family: var(--serif); font-size: 0.95rem; font-style: italic; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .preview-byline-name { font-size: 0.82rem; font-weight: 500; }
+  .preview-byline-role { font-size: 0.72rem; color: var(--ink-faint); }
+  .preview-body p { font-size: 0.95rem; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.4rem; font-weight: 300; }
+  .preview-body p:first-child { font-size: 1.02rem; color: var(--ink); font-weight: 400; }
+  .preview-body h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; margin: 2rem 0 0.75rem; line-height: 1.25; }
+  .preview-body h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; margin: 1.5rem 0 0.6rem; }
+  .preview-body blockquote { border-left: 3px solid var(--teal); padding: 0.5rem 0 0.5rem 1.25rem; margin: 1.5rem 0; }
+  .preview-body blockquote p { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--ink); margin: 0; font-weight: 400; }
+  .preview-aside { background: var(--cream-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .preview-aside-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.4rem; display: block; }
+  .preview-aside p { font-size: 0.83rem; color: var(--ink-soft); margin: 0; line-height: 1.6; font-weight: 300; }
+  .preview-placeholder { color: var(--ink-faint); font-style: italic; font-size: 0.9rem; text-align: center; padding: 3rem 0; }
+
+  /* ── OUTPUT PANEL ── */
+  .output-pane {
+    display: none;
+    grid-column: 1 / -1;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+  .output-pane.visible { display: block; }
+
+  .output-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .output-header h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+  .output-instructions {
+    background: var(--teal-pale); border: 1px solid var(--teal-border);
+    border-radius: 4px; padding: 1rem 1.25rem; margin-bottom: 1rem;
+    font-size: 0.83rem; color: var(--teal); line-height: 1.65;
+  }
+  .output-instructions strong { font-weight: 500; display: block; margin-bottom: 0.25rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .output-instructions ol { margin-left: 1.25rem; margin-top: 0.4rem; }
+  .output-instructions li { margin-bottom: 0.3rem; }
+  .output-code {
+    background: #1e1e1e; color: #d4d0c8;
+    border-radius: 4px; padding: 1.25rem;
+    font-family: var(--mono); font-size: 0.75rem; line-height: 1.6;
+    overflow-x: auto; white-space: pre;
+    max-height: 400px; overflow-y: auto;
+  }
+  .copy-success { color: var(--teal); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; display: none; }
+  .copy-success.visible { display: inline; }
+
+  /* ── FILENAME DISPLAY ── */
+  .filename-preview {
+    background: var(--cream-2); border: 1px solid var(--rule); border-radius: 3px;
+    padding: 0.5rem 0.75rem; font-family: var(--mono); font-size: 0.75rem; color: var(--ink-mid);
+    margin-top: 0.4rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .editor-wrap { grid-template-columns: 1fr; height: auto; }
+    .editor-pane { border-right: none; border-bottom: 1px solid var(--rule); max-height: 60vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="topbar-logo">Patricia Cruz</a>
+    <span class="topbar-sep">·</span>
+    <span class="topbar-title">Post Editor</span>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+    <button class="btn btn-generate" onclick="generateHTML()">Generate HTML →</button>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tabbar">
+  <div class="tab active" onclick="switchTab('editor')" id="tab-editor">Edit</div>
+  <div class="tab" onclick="switchTab('preview')" id="tab-preview">Preview</div>
+  <div class="tab" onclick="switchTab('output')" id="tab-output">Generated HTML</div>
+</div>
+
+<!-- MAIN -->
+<div class="editor-wrap" id="editor-wrap">
+
+  <!-- LEFT: EDITOR PANE -->
+  <div class="editor-pane" id="editor-pane">
+
+    <!-- META -->
+    <div class="editor-section">
+      <p class="field-label">Post info <span class="required">*</span></p>
+      <div class="meta-grid">
+        <div>
+          <p class="field-label">Title</p>
+          <input type="text" id="f-title" placeholder="What does it mean to learn with AI?" oninput="updatePreview()">
+        </div>
+        <div>
+          <p class="field-label">Subtitle <span style="opacity:0.5;font-size:0.55rem;">(optional)</span></p>
+          <input type="text" id="f-subtitle" placeholder="A reflection on…" oninput="updatePreview()">
+        </div>
+        <div>
+          <p class="field-label">Category</p>
+          <select id="f-tag" onchange="updatePreview()">
+            <option value="Essay">Essay</option>
+            <option value="Reflection">Reflection</option>
+            <option value="Practice">Practice</option>
+            <option value="Research">Research</option>
+            <option value="Design">Design</option>
+          </select>
+        </div>
+        <div>
+          <p class="field-label">Date</p>
+          <input type="date" id="f-date" oninput="updatePreview()">
+        </div>
+      </div>
+      <div style="margin-top:0.75rem;">
+        <p class="field-label">Filename <span style="opacity:0.5;font-size:0.55rem;">(auto-generated)</span></p>
+        <div class="filename-preview" id="filename-preview">post-my-title.html</div>
+        <p class="field-hint">This is the name of the file you'll upload to GitHub.</p>
+      </div>
+    </div>
+
+    <!-- TOOLBAR + BODY -->
+    <div class="editor-section" style="flex:1;">
+      <p class="field-label">Post content <span class="required">*</span></p>
+      <p class="field-hint" style="margin-bottom:0.6rem;">Use the toolbar to add formatting. Each paragraph = one blank line between them.</p>
+
+      <div class="toolbar">
+        <button class="toolbar-btn" onclick="insertFormat('bold')" title="Bold"><b>B</b></button>
+        <button class="toolbar-btn" onclick="insertFormat('italic')" title="Italic"><i>I</i></button>
+        <div class="toolbar-sep"></div>
+        <button class="toolbar-btn" onclick="insertFormat('h2')" title="Heading 2">H2</button>
+        <button class="toolbar-btn" onclick="insertFormat('h3')" title="Heading 3">H3</button>
+        <div class="toolbar-sep"></div>
+        <button class="toolbar-btn" onclick="insertFormat('pullquote')" title="Pull quote">❝ Quote</button>
+        <button class="toolbar-btn" onclick="insertFormat('aside')" title="Research note">📎 Note</button>
+        <div class="toolbar-sep"></div>
+        <button class="toolbar-btn" onclick="insertFormat('sep')" title="Separator">— Sep</button>
+      </div>
+
+      <textarea id="body-editor" placeholder="Start writing your post here…
+
+Each paragraph is separated by a blank line.
+
+Use the toolbar above to add formatting:
+  [H2] My heading
+  [H3] My subheading
+  [QUOTE] A highlighted quote
+  [NOTE] A research note box
+  [SEP] A horizontal separator line
+
+Example:
+There is a difference between asking someone for an answer and thinking out loud with them.
+
+[H2] The question behind the question
+
+Most of the discourse around AI in education…
+
+[QUOTE] The risk is not that students will use AI to cheat." oninput="updatePreview()"></textarea>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: PREVIEW PANE -->
+  <div class="preview-pane" id="preview-pane">
+    <div class="preview-inner" id="preview-inner">
+      <p class="preview-placeholder">Start typing to see your post preview →</p>
+    </div>
+  </div>
+
+  <!-- OUTPUT PANE (full width, hidden) -->
+  <div class="output-pane" id="output-pane">
+    <div class="output-header">
+      <h3>Your post is ready</h3>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <span class="copy-success" id="copy-success">✓ Copied!</span>
+        <button class="btn btn-light" onclick="copyHTML()">Copy HTML</button>
+        <button class="btn btn-teal" onclick="downloadHTML()">Download file</button>
+      </div>
+    </div>
+    <div class="output-instructions">
+      <strong>How to publish on GitHub</strong>
+      <ol>
+        <li>Click <strong>Download file</strong> — save the .html file to your computer</li>
+        <li>Go to your GitHub repository: <code>github.com/yourusername/yourusername.github.io</code></li>
+        <li>Click <strong>Add file → Upload files</strong></li>
+        <li>Drag the downloaded file and click <strong>Commit changes</strong></li>
+        <li>Add the post to <code>index.html</code> in the Writing section (see guide)</li>
+        <li>Done — your post is live in ~1 minute!</li>
+      </ol>
+    </div>
+    <pre class="output-code" id="output-code"></pre>
+  </div>
+
+</div>
+
+<script>
+// ── FORMAT MAP ──
+const formats = {
+  bold:      { before: '**', after: '**', placeholder: 'bold text' },
+  italic:    { before: '_', after: '_', placeholder: 'italic text' },
+  h2:        { before: '[H2] ', after: '', placeholder: 'Section heading' },
+  h3:        { before: '[H3] ', after: '', placeholder: 'Sub-heading' },
+  pullquote: { before: '[QUOTE] ', after: '', placeholder: 'Write your pull quote here' },
+  aside:     { before: '[NOTE] ', after: '', placeholder: 'Write your research note here' },
+  sep:       { before: '[SEP]', after: '', placeholder: '' },
+};
+
+function insertFormat(type) {
+  const ta = document.getElementById('body-editor');
+  const { before, after, placeholder } = formats[type];
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  const selected = ta.value.substring(start, end) || placeholder;
+  const insertion = '\n' + before + selected + after + '\n';
+  ta.value = ta.value.substring(0, start) + insertion + ta.value.substring(end);
+  ta.focus();
+  updatePreview();
+}
+
+// ── PARSE BODY ──
+function parseBody(raw) {
+  const lines = raw.split('\n');
+  let html = '';
+  let para = [];
+
+  function flushPara() {
+    if (para.length) {
+      const text = para.join(' ').trim();
+      if (text) html += `<p>${inlineFormat(text)}</p>\n`;
+      para = [];
+    }
+  }
+
+  for (let line of lines) {
+    const t = line.trim();
+    if (!t) { flushPara(); continue; }
+
+    if (t.startsWith('[H2] ')) { flushPara(); html += `<h2>${inlineFormat(t.slice(5))}</h2>\n`; }
+    else if (t.startsWith('[H3] ')) { flushPara(); html += `<h3>${inlineFormat(t.slice(5))}</h3>\n`; }
+    else if (t.startsWith('[QUOTE] ')) { flushPara(); html += `<blockquote><p>${inlineFormat(t.slice(8))}</p></blockquote>\n`; }
+    else if (t.startsWith('[NOTE] ')) { flushPara(); html += `[ASIDE]${inlineFormat(t.slice(7))}[/ASIDE]\n`; }
+    else if (t === '[SEP]') { flushPara(); html += `<hr class="post-sep">\n`; }
+    else { para.push(t); }
+  }
+  flushPara();
+  return html;
+}
+
+function inlineFormat(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/_(.*?)_/g, '<em>$1</em>');
+}
+
+// ── PREVIEW ──
+function updatePreview() {
+  const title    = document.getElementById('f-title').value;
+  const subtitle = document.getElementById('f-subtitle').value;
+  const tag      = document.getElementById('f-tag').value;
+  const dateVal  = document.getElementById('f-date').value;
+  const body     = document.getElementById('body-editor').value;
+
+  updateFilename(title);
+
+  const pane = document.getElementById('preview-inner');
+  if (!title && !body) {
+    pane.innerHTML = '<p class="preview-placeholder">Start typing to see your post preview →</p>';
+    return;
+  }
+
+  const dateLabel = dateVal ? new Date(dateVal + 'T12:00:00').toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) : 'Date';
+  const bodyParsed = parseBody(body)
+    .replace(/\[ASIDE\](.*?)\[\/ASIDE\]/gs, `<div class="preview-aside"><span class="preview-aside-label">Research note</span><p>$1</p></div>`);
+
+  pane.innerHTML = `
+    <div class="preview-meta">
+      <span class="preview-tag">${tag}</span>
+      <span class="preview-date">${dateLabel}</span>
+    </div>
+    ${title ? `<div class="preview-title">${inlineFormat(title)}</div>` : ''}
+    ${subtitle ? `<div class="preview-subtitle">${subtitle}</div>` : ''}
+    <div class="preview-byline">
+      <div class="preview-byline-dot">P</div>
+      <div>
+        <div class="preview-byline-name">Patricia Cruz</div>
+        <div class="preview-byline-role">MSc Computational Social Science · Linköping University</div>
+      </div>
+    </div>
+    <div class="preview-body">${bodyParsed}</div>
+  `;
+}
+
+function updateFilename(title) {
+  const slug = title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim().replace(/\s+/g, '-').substring(0, 50) || 'my-post';
+  document.getElementById('filename-preview').textContent = `post-${slug}.html`;
+}
+
+// ── TABS ──
+function switchTab(tab) {
+  ['editor','preview','output'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.remove('active');
+  });
+  document.getElementById(`tab-${tab}`).classList.add('active');
+
+  const editorPane  = document.getElementById('editor-pane');
+  const previewPane = document.getElementById('preview-pane');
+  const outputPane  = document.getElementById('output-pane');
+  const wrap        = document.getElementById('editor-wrap');
+
+  editorPane.style.display  = 'none';
+  previewPane.style.display = 'none';
+  outputPane.classList.remove('visible');
+  previewPane.classList.remove('fullwidth');
+
+  if (tab === 'editor') {
+    editorPane.style.display  = 'flex';
+    previewPane.style.display = 'block';
+  } else if (tab === 'preview') {
+    previewPane.style.display = 'block';
+    previewPane.classList.add('fullwidth');
+  } else if (tab === 'output') {
+    outputPane.classList.add('visible');
+  }
+}
+
+// ── GENERATE HTML ──
+function generateHTML() {
+  const title    = document.getElementById('f-title').value.trim();
+  const subtitle = document.getElementById('f-subtitle').value.trim();
+  const tag      = document.getElementById('f-tag').value;
+  const dateVal  = document.getElementById('f-date').value;
+  const body     = document.getElementById('body-editor').value;
+
+  if (!title || !body) {
+    alert('Please add a title and some content before generating.');
+    return;
+  }
+
+  const dateLabel = dateVal ? new Date(dateVal + 'T12:00:00').toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) : '';
+  const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').substring(0,50);
+
+  const bodyHTML = parseBody(body)
+    .replace(/\[ASIDE\](.*?)\[\/ASIDE\]/gs,
+      `  <div class="post-aside">\n    <span class="aside-label">Research note</span>\n    <p>$1</p>\n  </div>`)
+    .split('\n').map(l => l ? '  ' + l : '').join('\n');
+
+  const titleHTML = inlineFormat(title);
+  const subtitleHTML = subtitle ? `\n  <p class="post-subtitle">${subtitle}</p>` : '';
+
+  const output = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title} — Patricia Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="post-styles.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Patricia Cruz</a>
+  <ul class="nav-links">
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="index.html#writing">Writing</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span>/</span>
+  <a href="index.html#writing">Writing</a>
+  <span>/</span>
+  <span class="current">${title}</span>
+</div>
+
+<header class="post-header">
+  <div class="post-meta">
+    <span class="post-tag">${tag}</span>
+    ${dateLabel ? `<span class="post-date-label">${dateLabel}</span>` : ''}
+  </div>
+  <h1 class="post-title">${titleHTML}</h1>${subtitleHTML}
+  <div class="post-byline">
+    <div class="byline-initial">P</div>
+    <div class="byline-info">
+      <span class="byline-name">Patricia Cruz</span>
+      <span class="byline-role">MSc Computational Social Science · Linköping University</span>
+    </div>
+  </div>
+</header>
+
+<article class="post-body">
+${bodyHTML}
+</article>
+
+<div class="post-footer">
+  <div class="post-footer-inner">
+    <div class="post-tags-section">
+      <p>Topics</p>
+      <div class="post-tags">
+        <span>${tag}</span>
+        <span>Human–AI Learning</span>
+      </div>
+    </div>
+    <div class="post-nav-section">
+      <p>Back</p>
+      <a href="index.html#writing">← All writing</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-name">Patricia Cruz</span>
+    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>`;
+
+  document.getElementById('output-code').textContent = output;
+  switchTab('output');
+  window._generatedHTML = output;
+  window._generatedSlug = `post-${slug}.html`;
+}
+
+function copyHTML() {
+  navigator.clipboard.writeText(window._generatedHTML || '').then(() => {
+    const el = document.getElementById('copy-success');
+    el.classList.add('visible');
+    setTimeout(() => el.classList.remove('visible'), 2000);
+  });
+}
+
+function downloadHTML() {
+  const blob = new Blob([window._generatedHTML || ''], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = window._generatedSlug || 'post.html';
+  a.click();
+}
+
+function clearAll() {
+  if (!confirm('Clear everything and start a new post?')) return;
+  ['f-title','f-subtitle','body-editor'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-date').value = '';
+  document.getElementById('f-tag').value = 'Essay';
+  updatePreview();
+  switchTab('editor');
+}
+
+// Init
+document.getElementById('f-date').valueAsDate = new Date();
+updatePreview();
+</script>
+</body>
+</html>`;
