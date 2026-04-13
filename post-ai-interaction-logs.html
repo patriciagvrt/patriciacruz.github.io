@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can AI Interaction Logs Help Learners See Their Own Thinking? — Patricia Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="post-styles.css">
+<style>
+.log-example{background:#f5f3ee;border:1px solid var(--rule);border-left:3px solid var(--teal);border-radius:0 4px 4px 0;padding:1.5rem;margin:2rem 0;}
+.log-example .log-label{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;display:block;border-bottom:1px solid var(--rule);padding-bottom:0.5rem;}
+.log-turn{display:grid;grid-template-columns:60px 1fr;gap:0.75rem;margin-bottom:0.9rem;align-items:start;}
+.log-turn:last-child{margin-bottom:0;}
+.log-role{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding-top:2px;}
+.log-role.user{color:var(--ink-mid);}
+.log-role.ai{color:var(--teal-mid);}
+.log-text{color:var(--ink-mid);font-family:var(--sans);font-size:0.84rem;font-weight:300;line-height:1.6;}
+.log-annotation{display:flex;align-items:flex-start;gap:0.6rem;margin-top:0.4rem;padding:0.5rem 0.6rem;background:var(--teal-pale);border-radius:3px;font-family:var(--sans);font-size:0.76rem;color:var(--teal);line-height:1.5;font-weight:300;}
+.log-annotation::before{content:'↑';font-size:0.7rem;flex-shrink:0;margin-top:1px;}
+.thesis-box{background:var(--ink);color:var(--cream);border-radius:4px;padding:1.75rem;margin:2.5rem 0;}
+.thesis-box .thesis-label{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#8ab5a8;margin-bottom:0.75rem;display:block;}
+.thesis-box p{font-size:0.88rem;color:#c8c4bc;line-height:1.75;margin-bottom:0.75rem;font-weight:300;}
+.thesis-box p:last-child{margin-bottom:0;}
+.thesis-box strong{color:var(--cream);font-weight:400;}
+.thesis-box em{font-style:italic;color:#a8d4c8;}
+.references{max-width:720px;margin:0 auto;padding:0 2rem 3rem;}
+.references-inner{border-top:1px solid var(--rule);padding-top:2rem;}
+.references-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.25rem;}
+.references ol{list-style:none;counter-reset:ref-counter;display:flex;flex-direction:column;gap:0.75rem;}
+.references ol li{counter-increment:ref-counter;display:grid;grid-template-columns:20px 1fr;gap:0.75rem;font-size:0.82rem;color:var(--ink-soft);line-height:1.6;font-weight:300;}
+.references ol li::before{content:counter(ref-counter);font-family:var(--mono);font-size:0.65rem;color:var(--ink-faint);padding-top:2px;}
+.references ol li em{font-style:italic;color:var(--ink-mid);}
+@media(max-width:640px){.log-turn{grid-template-columns:48px 1fr;}.thesis-box{padding:1.25rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Patricia Cruz</a>
+  <ul class="nav-links">
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="index.html#writing">Writing</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span>/</span>
+  <a href="index.html#writing">Writing</a>
+  <span>/</span>
+  <span class="current">Can AI Interaction Logs Help Learners See Their Own Thinking?</span>
+</div>
+
+<header class="post-header">
+  <div class="post-meta">
+    <span class="post-tag">Research</span>
+    <span class="post-date-label">April 2025</span>
+    <span class="post-date-label" style="color:var(--rule);">·</span>
+    <span class="post-date-label">10 min read</span>
+  </div>
+  <h1 class="post-title">Can AI Interaction Logs Help Learners<br><em>See Their Own Thinking?</em></h1>
+  <p class="post-subtitle">The prompts we write, the questions we change, the moments we doubt the answer — all of that forms a trace. What if that trace could teach us something about ourselves?</p>
+  <div class="post-byline">
+    <div class="byline-initial">P</div>
+    <div class="byline-info">
+      <span class="byline-name">Patricia Cruz</span>
+      <span class="byline-role">MSc Computational Social Science · Linköping University</span>
+    </div>
+  </div>
+</header>
+
+<article class="post-body">
+
+  <p>When we use AI tools for studying, writing, brainstorming, or problem solving, we usually focus on the final answer. We look at the output, decide whether it is useful, and move on. But something important often gets ignored — the process that happened in between. The prompts we wrote, the questions we changed, the moments we doubted the answer, the times we asked the AI to explain something again. All of that forms a trace of thinking. These traces, or <strong>interaction logs</strong>, can become a powerful way for learners to reflect on how they think.</p>
+
+  <p>Recent research on generative AI argues that these systems place significant demands on users' metacognitive skills — especially their ability to monitor, evaluate, and control their own thinking while deciding whether to trust, revise, or challenge AI outputs.<sup>4</sup> This is not a small demand. It requires a kind of active, critical awareness that does not happen automatically, especially when AI responses sound confident and fluent.</p>
+
+  <h2>A moment from my own studies</h2>
+
+  <p>I want to start with something personal, because I think it matters. During a data analysis course last semester, I began keeping a simple habit: after each study session involving an AI tool, I would scroll back through the conversation before closing it. Just a few minutes of looking at what I had actually asked, and how my questions had changed.</p>
+
+  <p>What I found was uncomfortable in a useful way. In the early parts of a session, my prompts were broad and outcome-seeking — I wanted answers, not understanding. As I got more confused, I asked the AI to repeat itself in different ways rather than stopping to think about what I actually did not understand. And there were moments where I had accepted an explanation that, looking back, I could not actually verify or reproduce on my own.</p>
+
+  <p>The log did not judge me. But it showed me something my memory had already smoothed over. In my memory, I had "worked through" the material. The log told a more complicated story.</p>
+
+  <div class="pull-quote">
+    <p>In my memory, I had "worked through" the material. The log told a more complicated story.</p>
+  </div>
+
+  <h2>What is metacognition, and why does it matter here?</h2>
+
+  <p>This experience connects directly to the concept of metacognition — often described as <em>thinking about one's own thinking</em>. It includes awareness of what you know, what you do not know, and which strategies you use to learn or solve problems. John Flavell's foundational work established metacognition as essential to understanding how people monitor and regulate their cognitive processes.<sup>1</sup></p>
+
+  <p>What makes AI interaction different from other study tools is that it leaves a visible record of the thinking process — something most learning experiences do not do. A notebook shows your conclusions. A conversation log shows your journey, including the wrong turns.</p>
+
+  <h2>What a log actually looks like — and what it can reveal</h2>
+
+  <p>To make this concrete, here is a simplified example of what a short AI interaction log might look like for a student studying a concept in social science, and what a reflective reader — the student themselves — might notice when reading it back.</p>
+
+  <div class="log-example">
+    <span class="log-label">Example — Interaction log excerpt (paraphrased and annotated)</span>
+    <div class="log-turn">
+      <span class="log-role user">Student</span>
+      <div>
+        <div class="log-text">Explain social capital to me.</div>
+        <div class="log-annotation">Broad and passive. No indication of what the student already knows or where they are stuck.</div>
+      </div>
+    </div>
+    <div class="log-turn">
+      <span class="log-role ai">AI</span>
+      <div class="log-text">Social capital refers to the networks, relationships, and norms of trust that enable people to act collectively. Putnam distinguishes between bonding capital, which connects similar people, and bridging capital, which connects different groups...</div>
+    </div>
+    <div class="log-turn">
+      <span class="log-role user">Student</span>
+      <div>
+        <div class="log-text">Okay, can you give me an example?</div>
+        <div class="log-annotation">Still passive. The student has not tested whether they understood — they are asking for more input rather than producing any output themselves.</div>
+      </div>
+    </div>
+    <div class="log-turn">
+      <span class="log-role user">Student</span>
+      <div>
+        <div class="log-text">Actually, is social capital the same as cultural capital?</div>
+        <div class="log-annotation">This is more interesting — the student is generating a comparison, which suggests active thinking. But the question came after two rounds of receiving, not after attempting to answer it themselves first.</div>
+      </div>
+    </div>
+    <div class="log-turn">
+      <span class="log-role user">Student</span>
+      <div>
+        <div class="log-text">Okay I think I get it. Can you summarise everything you just said?</div>
+        <div class="log-annotation">The student is outsourcing the synthesis. This is the moment where metacognitive awareness matters most — instead of summarising themselves as a check on understanding, they are asking the AI to do it for them.</div>
+      </div>
+    </div>
+  </div>
+
+  <p>What this log reveals is not that the student was lazy or disengaged. It reveals a <em>pattern</em>: they spent the whole session receiving information and never produced any themselves. They did not attempt a summary, did not connect the concept to something they already knew, and did not catch the moment where they could have tested their own understanding. A learner who reads this log back and notices these patterns is already doing something valuable — they are reflecting on their process, not just their outcome.</p>
+
+  <h2>Learning analytics as a metacognitive tool</h2>
+
+  <p>This is also where the field of learning analytics becomes relevant. Research in this area has suggested that data about learner behaviour can support reflection and self-regulated learning — when it is designed around the learner rather than only around institutional monitoring.<sup>2</sup> One important line of work argues that trace data can serve as observable indicators of metacognitive monitoring and control, which are central components of self-regulated learning.<sup>3</sup></p>
+
+  <div class="post-aside">
+    <span class="aside-label">Research note</span>
+    <p>A recent systematic review found increasing interest in using AI-enhanced analytics to foster metacognitive and socioemotional competencies, suggesting that these tools may help students better understand and regulate their own learning processes.<sup>5</sup> Importantly, the review also notes that design matters enormously — analytics presented without guidance or structure rarely produce meaningful reflection on their own.</p>
+  </div>
+
+  <h2>AI changes the learning situation itself</h2>
+
+  <p>In the context of generative AI, all of this becomes even more urgent. AI does not simply provide information — it <em>changes the learning situation</em>. Students now need to judge whether an answer is reliable, decide when to ask follow-up questions, notice when they are becoming overly dependent on the tool, and reflect on whether the AI is helping them understand or merely helping them finish a task.</p>
+
+  <p>That last distinction matters enormously. There is a real difference between finishing an assignment with AI's help and actually understanding the material. The interaction log is one of the few places where that difference becomes visible — because it shows whether the student was thinking alongside the AI or simply collecting its outputs.</p>
+
+  <p>Research on generative AI and metacognition highlights exactly this tension, showing that AI can both support <em>and</em> strain learners' metacognitive capacities.<sup>4</sup> The fluency of AI responses can create an illusion of understanding. Everything sounds clear. Everything sounds correct. It takes deliberate effort to stop and ask: do I actually understand this, or does it just sound like I do?</p>
+
+  <hr class="post-sep">
+
+  <h2>Implications for teachers and learning design</h2>
+
+  <p>If interaction logs can function as reflective mirrors, then educators have an interesting design opportunity. Rather than treating AI use as something that happens outside the learning process, teachers could incorporate structured log reflection as a pedagogical activity. This does not require sophisticated technology. It can be as simple as asking students to scroll back through a conversation and answer three questions: What did I ask? What did I accept without questioning? What would I ask differently now?</p>
+
+  <p>My years working as a technology teacher and later as an IT department lead gave me a particular sensitivity to this kind of design question. I watched students use digital tools in ways that looked like engagement but were often closer to copying — the tool changed, but the underlying pattern did not. What was missing was not access to technology. It was a structured invitation to reflect on how they were using it.</p>
+
+  <h2>Where I want to take this</h2>
+
+  <div class="thesis-box">
+    <span class="thesis-label">A note on my thesis</span>
+    <p>This post is, in many ways, the seed of my thesis research. Beginning next academic year, I plan to investigate whether <em>reflective AI interaction logs</em> can function as both a methodological and pedagogical tool — helping students develop metacognitive awareness in contexts where generative AI mediates their learning.</p>
+    <p>The core questions I am working towards: Can students learn to read their own logs as evidence of their thinking processes? Does guided log reflection change how they interact with AI in subsequent sessions? And can this approach work across different educational contexts — not just universities, but in the kinds of diverse, under-resourced classrooms I worked in earlier in my career?</p>
+    <p>I do not have answers yet. But I have a strong intuition that the log is an underused artefact — one that sits quietly at the end of every AI conversation, waiting to become something more than a transcript. <strong>I want to find out what it can become.</strong></p>
+  </div>
+
+  <h2>So, can interaction logs help?</h2>
+
+  <p>I think the answer is yes — but only if the logs are used intentionally. A record alone does nothing. What matters is how learners are guided to interpret it. If students are encouraged to revisit their prompts, examine their choices, question their dependence on AI, and identify patterns in their own behaviour, then interaction logs can become much more than digital leftovers.</p>
+
+  <p>They can become a pedagogical tool for reflection, self-awareness, and deeper learning. That is the idea I want to keep exploring — and this post is the beginning of thinking about it in public. If you are a researcher, educator, or student who has thought about this too, I would genuinely love to hear from you.</p>
+
+</article>
+
+<div class="references">
+  <div class="references-inner">
+    <p class="references-label">References</p>
+    <ol>
+      <li>Flavell, J. H. (1979). Metacognition and cognitive monitoring: A new area of cognitive-developmental inquiry. <em>American Psychologist, 34</em>(10), 906–911.</li>
+      <li>Durall, E., &amp; Gros, B. (2014). Learning analytics as a metacognitive tool. In <em>Proceedings of the 6th International Conference on Computer Supported Education</em>, 380–384.</li>
+      <li>Winne, P. H. (2017). Learning analytics for self-regulated learning. In C. Lang, G. Siemens, A. Wise, &amp; D. Gašević (Eds.), <em>Handbook of Learning Analytics</em>.</li>
+      <li>Tankelevitch, L., Kewenig, V., Simkute, A., Scott, A. E., Sarkar, A., Sellen, A., &amp; Rintel, S. (2024). The metacognitive demands and opportunities of generative AI. In <em>Proceedings of the CHI Conference on Human Factors in Computing Systems</em>.</li>
+      <li>Pacheco, A. J., et al. (2025). AI-powered learning analytics for metacognitive and socioemotional development: A systematic review. <em>Frontiers in Education</em>.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="post-footer">
+  <div class="post-footer-inner">
+    <div class="post-tags-section">
+      <p>Topics</p>
+      <div class="post-tags">
+        <span>Metacognition</span>
+        <span>AI Literacy</span>
+        <span>Learning Analytics</span>
+        <span>Research</span>
+        <span>Self-regulated Learning</span>
+      </div>
+    </div>
+    <div class="post-nav-section">
+      <p>Back</p>
+      <a href="index.html#writing">← All writing</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-name">Patricia Cruz</span>
+    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
