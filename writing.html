@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing — Patricia Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1916; --ink-mid: #4a4845; --ink-soft: #6b6864; --ink-faint: #9e9b97;
+    --cream: #faf8f4; --cream-2: #f2ede4; --rule: #ddd8ce;
+    --teal: #1b5e50; --teal-mid: #2a8a76; --teal-pale: #e4f0ec; --teal-border: #b2d4cc;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--rule); padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+
+  .page-header { border-bottom: 2px solid var(--ink); padding: 3rem 2.5rem 2rem; max-width: 960px; margin: 0 auto; }
+  .page-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; }
+  .page-title { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 0.9rem; }
+  .page-title em { font-style: italic; color: var(--teal); }
+  .page-desc { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; font-weight: 300; }
+
+  .page-wrap { max-width: 960px; margin: 0 auto; padding: 3rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+
+  /* FILTER TABS */
+  .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .filter-tab { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; border: 1px solid var(--rule); color: var(--ink-soft); background: var(--cream-2); cursor: pointer; transition: all 0.15s; }
+  .filter-tab:hover, .filter-tab.active { background: var(--teal-pale); border-color: var(--teal-border); color: var(--teal); }
+
+  /* POSTS */
+  .posts-list { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .post-row { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.5rem; background: var(--cream); border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; transition: background 0.15s; }
+  .post-row:last-child { border-bottom: none; }
+  .post-row:hover { background: var(--cream-2); }
+  .post-row.coming { opacity: 0.55; cursor: default; pointer-events: none; }
+  .post-date { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.5; text-align: right; }
+  .post-info { display: flex; flex-direction: column; gap: 0.35rem; }
+  .post-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .post-title em { font-style: italic; color: var(--teal); }
+  .post-excerpt { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; font-weight: 300; }
+  .post-tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); background: var(--teal-pale); border: 1px solid var(--teal-border); padding: 3px 9px; border-radius: 2px; white-space: nowrap; align-self: flex-start; }
+
+  /* SIDEBAR */
+  .sidebar { border-left: 1px solid var(--rule); padding-left: 2rem; }
+  .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--rule); }
+  .sidebar-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .sidebar-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+  .sidebar-block p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.65; font-weight: 300; }
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag-pill { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; border: 1px solid var(--rule); color: var(--ink-soft); background: var(--cream-2); }
+
+  footer { border-top: 1px solid var(--rule); padding: 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { display: flex; flex-direction: column; gap: 0.1rem; }
+  .footer-name { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-mid); font-weight: 500; }
+  .footer-sub { font-family: var(--serif); font-size: 0.78rem; color: var(--ink-faint); font-style: italic; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--teal); }
+
+  @media (max-width: 720px) {
+    nav { padding: 0 1.25rem; } .nav-links { gap: 1.25rem; }
+    .page-header { padding: 2rem 1.25rem 1.5rem; }
+    .page-wrap { grid-template-columns: 1fr; padding: 2rem 1.25rem; gap: 2rem; }
+    .sidebar { border-left: none; padding-left: 0; border-top: 2px solid var(--rule); padding-top: 2rem; }
+    .post-row { grid-template-columns: 60px 1fr; }
+    .post-tag { display: none; }
+    footer { flex-direction: column; gap: 1rem; padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Patricia Cruz</a>
+  <ul class="nav-links">
+    <li><a href="research.html">Research</a></li>
+    <li><a href="writing.html" class="active">Writing</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Essays, reflections & notes</p>
+  <h1 class="page-title">Writing</h1>
+  <p class="page-desc">Personal essays and reflections — my voice, not formal research. Short pieces on what I am reading, thinking, and observing about human–AI learning.</p>
+</div>
+
+<div class="page-wrap">
+  <main>
+    <div class="filter-tabs">
+      <span class="filter-tab active">All</span>
+      <span class="filter-tab">Essay</span>
+      <span class="filter-tab">Reflection</span>
+      <span class="filter-tab">Practice</span>
+      <span class="filter-tab">Research</span>
+    </div>
+
+    <div class="posts-list">
+
+      <!-- PUBLISHED POST -->
+      <a href="post-ai-interaction-logs.html" class="post-row">
+        <div class="post-date">Apr<br>2025</div>
+        <div class="post-info">
+          <div class="post-title">Can AI interaction logs help learners <em>see their own thinking?</em></div>
+          <div class="post-excerpt">The prompts we write, the questions we change, the moments we doubt the answer — all of that forms a trace. What if that trace could teach us something about ourselves?</div>
+        </div>
+        <span class="post-tag">Research</span>
+      </a>
+
+      <!-- COMING SOON — add href and remove class="coming" when published -->
+      <a href="#" class="post-row coming">
+        <div class="post-date">Coming<br>soon</div>
+        <div class="post-info">
+          <div class="post-title">What does it mean to learn <em>with</em> an AI, not from one?</div>
+          <div class="post-excerpt">A reflection on the difference between using AI as a tutor and using it as a thinking partner.</div>
+        </div>
+        <span class="post-tag">Essay</span>
+      </a>
+
+      <a href="#" class="post-row coming">
+        <div class="post-date">Coming<br>soon</div>
+        <div class="post-info">
+          <div class="post-title">Notes on using generative AI in my own studies — what surprised me</div>
+          <div class="post-excerpt">An honest account of how my prompting behaviour changed over one semester, and what I noticed when I looked back at the logs.</div>
+        </div>
+        <span class="post-tag">Reflection</span>
+      </a>
+
+      <a href="#" class="post-row coming">
+        <div class="post-date">Coming<br>soon</div>
+        <div class="post-info">
+          <div class="post-title">Teaching children to think computationally — lessons from a decade in classrooms</div>
+          <div class="post-excerpt">What ten years of designing learning experiences for young students taught me about cognition, creativity, and the limits of digital tools.</div>
+        </div>
+        <span class="post-tag">Practice</span>
+      </a>
+
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="sidebar-block">
+      <p class="sidebar-label">About this writing</p>
+      <p>These are personal essays and reflections — written to think in public, not to publish in journals. For formal academic work, see the <a href="research.html" style="color:var(--teal);">Research</a> page.</p>
+    </div>
+    <div class="sidebar-block">
+      <p class="sidebar-label">Topics covered</p>
+      <div class="tag-cloud">
+        <span class="tag-pill">Metacognition</span>
+        <span class="tag-pill">AI Literacy</span>
+        <span class="tag-pill">Agency</span>
+        <span class="tag-pill">Learning Design</span>
+        <span class="tag-pill">EdTech</span>
+        <span class="tag-pill">Self-regulation</span>
+        <span class="tag-pill">Human–AI</span>
+      </div>
+    </div>
+    <div class="sidebar-block">
+      <p class="sidebar-label">New post?</p>
+      <p>I write when I have something worth sharing — not on a fixed schedule. Posts appear here as soon as they are ready.</p>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-name">Patricia Cruz</span>
+    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/patriciagvrt" target="_blank">GitHub</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

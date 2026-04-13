@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — Patricia Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1916; --ink-mid: #4a4845; --ink-soft: #6b6864; --ink-faint: #9e9b97;
+    --cream: #faf8f4; --cream-2: #f2ede4; --rule: #ddd8ce;
+    --teal: #1b5e50; --teal-mid: #2a8a76; --teal-pale: #e4f0ec; --teal-border: #b2d4cc;
+    --gold: #9a6b08; --gold-pale: #fdf3dc;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--rule); padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+
+  .page-header { border-bottom: 2px solid var(--ink); padding: 3rem 2.5rem 2rem; max-width: 960px; margin: 0 auto; }
+  .page-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; }
+  .page-title { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 0.9rem; }
+  .page-title em { font-style: italic; color: var(--teal); }
+  .page-desc { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; font-weight: 300; }
+
+  .page-wrap { max-width: 960px; margin: 0 auto; padding: 3rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+
+  /* SECTION LABEL */
+  .section-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); }
+
+  /* THESIS BLOCK */
+  .thesis-block { background: var(--ink); color: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 2.5rem; }
+  .thesis-block .label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8ab5a8; margin-bottom: 0.75rem; display: block; }
+  .thesis-block h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--cream); margin-bottom: 0.75rem; line-height: 1.3; }
+  .thesis-block h2 em { font-style: italic; color: #a8d4c8; }
+  .thesis-block p { font-size: 0.86rem; color: #c8c4bc; line-height: 1.75; margin-bottom: 0.75rem; font-weight: 300; }
+  .thesis-block p:last-child { margin-bottom: 0; }
+  .thesis-block .status { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8ab5a8; margin-top: 0.5rem; }
+  .thesis-block .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #8ab5a8; display: block; }
+
+  /* RESEARCH TOPICS */
+  .topics-list { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; margin-bottom: 2.5rem; }
+  .topic-item { background: var(--cream); padding: 1.4rem 1.5rem; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; transition: background 0.15s; }
+  .topic-item:hover { background: var(--cream-2); }
+  .topic-kicker { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 0.4rem; display: block; }
+  .topic-item h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 0.4rem; }
+  .topic-item p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; font-weight: 300; }
+  .topic-status { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; white-space: nowrap; align-self: flex-start; }
+  .topic-status.progress { background: var(--teal-pale); border: 1px solid var(--teal-border); color: var(--teal); }
+  .topic-status.planned { background: var(--cream-2); border: 1px solid var(--rule); color: var(--ink-faint); }
+
+  /* INTERESTS GRID */
+  .interests-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .interest-card { background: var(--cream); padding: 1.25rem; }
+  .interest-icon { width: 36px; height: 36px; border-radius: 3px; background: var(--teal-pale); display: flex; align-items: center; justify-content: center; margin-bottom: 0.75rem; font-size: 16px; }
+  .interest-card h3 { font-family: var(--serif); font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; line-height: 1.3; }
+  .interest-card p { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.6; }
+
+  /* SIDEBAR */
+  .sidebar { border-left: 1px solid var(--rule); padding-left: 2rem; }
+  .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--rule); }
+  .sidebar-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .sidebar-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+  .sidebar-block p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.65; font-weight: 300; margin-bottom: 0.5rem; }
+  .sidebar-block p:last-child { margin-bottom: 0; }
+  .award-pill { background: var(--gold-pale); border: 1px solid #e8cc7a; border-radius: 3px; padding: 0.7rem 0.9rem; font-size: 0.78rem; color: var(--gold); line-height: 1.5; }
+  .award-pill strong { display: block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 0.2rem; font-family: var(--mono); }
+  .course-list { list-style: none; display: flex; flex-direction: column; }
+  .course-list li { font-size: 0.8rem; color: var(--ink-soft); padding: 0.45rem 0; border-bottom: 1px solid var(--rule); line-height: 1.4; font-weight: 300; }
+  .course-list li:last-child { border-bottom: none; }
+
+  footer { border-top: 1px solid var(--rule); padding: 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { display: flex; flex-direction: column; gap: 0.1rem; }
+  .footer-name { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-mid); font-weight: 500; }
+  .footer-sub { font-family: var(--serif); font-size: 0.78rem; color: var(--ink-faint); font-style: italic; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--teal); }
+
+  @media (max-width: 720px) {
+    nav { padding: 0 1.25rem; } .nav-links { gap: 1.25rem; }
+    .page-header { padding: 2rem 1.25rem 1.5rem; }
+    .page-wrap { grid-template-columns: 1fr; padding: 2rem 1.25rem; gap: 2rem; }
+    .sidebar { border-left: none; padding-left: 0; border-top: 2px solid var(--rule); padding-top: 2rem; }
+    .interests-grid { grid-template-columns: 1fr; }
+    .topic-item { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Patricia Cruz</a>
+  <ul class="nav-links">
+    <li><a href="research.html" class="active">Research</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Academic work in progress</p>
+  <h1 class="page-title">Research</h1>
+  <p class="page-desc">Longer-form academic work — thesis chapters, papers, and formal research notes. These take more time and rigour than blog posts, and some are still being shaped.</p>
+</div>
+
+<div class="page-wrap">
+  <main>
+
+    <!-- THESIS -->
+    <p class="section-label">Thesis — starting 2025/26</p>
+    <div class="thesis-block">
+      <span class="label">MSc Thesis · Linköping University</span>
+      <h2>Reflective AI interaction logs as tools for <em>metacognitive development</em></h2>
+      <p>This thesis will investigate whether guided reflection on AI interaction logs can function as both a methodological and pedagogical tool — helping students develop metacognitive awareness in contexts where generative AI mediates their learning.</p>
+      <p>Central questions: Can students learn to read their own logs as evidence of their thinking processes? Does guided log reflection change how they interact with AI in subsequent sessions? Can this approach work across different educational contexts?</p>
+      <span class="status">In preparation — begins academic year 2025/26</span>
+    </div>
+
+    <!-- RESEARCH IN PROGRESS -->
+    <p class="section-label" style="margin-top:2.5rem;">Research topics in progress</p>
+    <div class="topics-list">
+
+      <div class="topic-item">
+        <div>
+          <span class="topic-kicker">Metacognition</span>
+          <h3>Can AI interaction logs help learners see their own thinking?</h3>
+          <p>Interaction logs as a methodological and pedagogical tool — connecting learning analytics, self-regulated learning, and generative AI use.</p>
+        </div>
+        <span class="topic-status progress">In progress</span>
+      </div>
+
+      <div class="topic-item">
+        <div>
+          <span class="topic-kicker">Agency</span>
+          <h3>Do students become more or less independent when using generative AI?</h3>
+          <p>Examining how AI-mediated decisions shape cognitive autonomy, self-direction, and productive struggle in learning environments.</p>
+        </div>
+        <span class="topic-status planned">Planned</span>
+      </div>
+
+      <div class="topic-item">
+        <div>
+          <span class="topic-kicker">Literacy</span>
+          <h3>Beyond the tool: what it means to be AI-literate</h3>
+          <p>Critical awareness, responsibility, and the socio-ethical dimensions of knowing how AI works — and teaching this to students.</p>
+        </div>
+        <span class="topic-status planned">Planned</span>
+      </div>
+
+      <div class="topic-item">
+        <div>
+          <span class="topic-kicker">Methods</span>
+          <h3>Using interaction data to study human reasoning with AI</h3>
+          <p>What AI conversation logs reveal about the patterns hidden in how people think with machines — a methodological perspective.</p>
+        </div>
+        <span class="topic-status planned">Planned</span>
+      </div>
+
+    </div>
+
+    <!-- RESEARCH INTERESTS -->
+    <p class="section-label" style="margin-top:2.5rem;">Broader research interests</p>
+    <div class="interests-grid">
+      <div class="interest-card">
+        <div class="interest-icon">🧠</div>
+        <h3>Metacognition &amp; AI</h3>
+        <p>How reflective interaction logs can surface and strengthen metacognitive awareness in learners.</p>
+      </div>
+      <div class="interest-card">
+        <div class="interest-icon">⚡</div>
+        <h3>Agency in learning</h3>
+        <p>Whether students develop critical thinking when generative AI mediates their study process.</p>
+      </div>
+      <div class="interest-card">
+        <div class="interest-icon">📖</div>
+        <h3>AI Literacy</h3>
+        <p>The cognitive and socio-ethical dimensions of understanding AI as more than a tool.</p>
+      </div>
+      <div class="interest-card">
+        <div class="interest-icon">🌐</div>
+        <h3>Equity &amp; Access</h3>
+        <p>Technology as a lever for expanding educational access in under-resourced communities.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-block">
+      <p class="sidebar-label">Academic position</p>
+      <p>MSc Computational Social Science</p>
+      <p>Linköping University, Sweden</p>
+      <p>Semester 2 — 2025</p>
+      <div class="award-pill" style="margin-top:0.9rem;">
+        <strong>Swedish Institute Scholarship</strong>
+        Awarded for academic merit and commitment to positive societal impact.
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <p class="sidebar-label">Courses completed</p>
+      <ul class="course-list">
+        <li>Data Analysis in Social Science</li>
+        <li>Behavioural Mechanisms in Social Science</li>
+        <li>Computational Methods for CSS</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-block">
+      <p class="sidebar-label">Background</p>
+      <p>Before the MSc, I spent nearly a decade as a technology teacher and IT department lead — designing learning environments that integrate programming, digital tools, and computational thinking.</p>
+      <p>This practice directly informs my research interest in how learning is shaped by the tools students use.</p>
+    </div>
+
+    <div class="sidebar-block">
+      <p class="sidebar-label">Collaborate</p>
+      <p>Interested in collaborating on research related to AI in education, metacognition, or learning analytics? I would love to connect.</p>
+      <p style="margin-top:0.5rem;"><a href="contact.html" style="color:var(--teal);font-size:0.82rem;">Get in touch →</a></p>
+    </div>
+
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-name">Patricia Cruz</span>
+    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/patriciagvrt" target="_blank">GitHub</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

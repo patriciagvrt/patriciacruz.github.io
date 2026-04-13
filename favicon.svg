@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#1b5e50"/>
+  <!-- Letter C in serif style -->
+  <text x="16" y="23" 
+    font-family="Georgia, serif" 
+    font-size="22" 
+    font-weight="400"
+    font-style="italic"
+    fill="#faf8f4" 
+    text-anchor="middle">C</text>
+  <!-- Small loop dot -->
+  <circle cx="22" cy="10" r="2.5" fill="#faf8f4" opacity="0.6"/>
+</svg>
