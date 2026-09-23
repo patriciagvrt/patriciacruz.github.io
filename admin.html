@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Post Editor — Patricia Cruz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -348,10 +349,10 @@ Most of the discourse around AI in education…
       <strong>How to publish on GitHub</strong>
       <ol>
         <li>Click <strong>Download file</strong> — save the .html file to your computer</li>
-        <li>Go to your GitHub repository: <code>github.com/yourusername/yourusername.github.io</code></li>
+        <li>Go to your GitHub repository: the website repository on GitHub</li>
         <li>Click <strong>Add file → Upload files</strong></li>
         <li>Drag the downloaded file and click <strong>Commit changes</strong></li>
-        <li>Add the post to <code>index.html</code> in the Writing section (see guide)</li>
+        <li>Add the post to the list in <code>writing.html</code> and, if it is the newest, <code>index.html</code></li>
         <li>Done — your post is live in ~1 minute!</li>
       </ol>
     </div>
@@ -524,30 +525,29 @@ function generateHTML() {
 <title>${title} — Patricia Cruz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="post-styles.css">
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">Patricia Cruz</a>
-  <ul class="nav-links">
-    <li><a href="index.html#research">Research</a></li>
-    <li><a href="index.html#writing">Writing</a></li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
-
-<div class="breadcrumb">
-  <a href="index.html">Home</a>
-  <span>/</span>
-  <a href="index.html#writing">Writing</a>
-  <span>/</span>
-  <span class="current">${title}</span>
-</div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="name" href="index.html">Patricia Cruz</a>
+    <nav aria-label="Main">
+    <ul>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="writing.html">Notes</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    </nav>
+  </div>
+</header>
 
 <header class="post-header">
+  <a class="back" href="writing.html">All notes</a>
   <div class="post-meta">
     <span class="post-tag">${tag}</span>
     ${dateLabel ? `<span class="post-date-label">${dateLabel}</span>` : ''}
@@ -562,6 +562,7 @@ function generateHTML() {
   </div>
 </header>
 
+<main id="main">
 <article class="post-body">
 ${bodyHTML}
 </article>
@@ -572,25 +573,25 @@ ${bodyHTML}
       <p>Topics</p>
       <div class="post-tags">
         <span>${tag}</span>
-        <span>Human–AI Learning</span>
+        
       </div>
     </div>
     <div class="post-nav-section">
       <p>Back</p>
-      <a href="index.html#writing">← All writing</a>
+      <a href="writing.html">All notes</a>
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="footer-brand">
-    <span class="footer-name">Patricia Cruz</span>
-    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
-  </div>
-  <div class="footer-links">
-    <a href="https://github.com" target="_blank">GitHub</a>
-    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-    <a href="contact.html">Contact</a>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p>&copy; 2026 Patricia Cruz. Computational Social Science, Linköping University.</p>
+    <ul>
+      <li><a href="https://github.com/patriciagvrt">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/YOUR-LINKEDIN">LinkedIn</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
   </div>
 </footer>
 

@@ -2,411 +2,146 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patricia Cruz — Cognitive Loop</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patricia Cruz | Computational Social Science</title>
+<meta name="description" content="Patricia Cruz, MSc student in Computational Social Science at Linköping University. Research on digital inequality, social networks and AI adoption.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #1a1916;
-    --ink-mid: #4a4845;
-    --ink-soft: #6b6864;
-    --ink-faint: #9e9b97;
-    --cream: #faf8f4;
-    --cream-2: #f2ede4;
-    --rule: #ddd8ce;
-    --teal: #1b5e50;
-    --teal-mid: #2a8a76;
-    --teal-pale: #e4f0ec;
-    --teal-border: #b2d4cc;
-    --gold: #9a6b08;
-    --gold-pale: #fdf3dc;
-    --serif: 'Cormorant Garamond', Georgia, serif;
-    --sans: 'DM Sans', system-ui, sans-serif;
-    --mono: 'DM Mono', monospace;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
-
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--cream); border-bottom: 1px solid var(--rule);
-    padding: 0 2.5rem; display: flex; align-items: center;
-    justify-content: space-between; height: 56px;
-  }
-  .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--ink); text-decoration: none; }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--teal); }
-
-  /* MASTHEAD */
-  .masthead { border-bottom: 2px solid var(--ink); }
-  .masthead-top {
-    max-width: 960px; margin: 0 auto;
-    padding: 3rem 2.5rem 1.25rem;
-    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.4rem;
-  }
-  .masthead-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); }
-  .masthead-name { font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1.0; }
-  .masthead-subtitle { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--teal); margin-top: 0.15rem; }
-  .masthead-affil { font-size: 0.78rem; color: var(--ink-faint); letter-spacing: 0.04em; margin-top: 0.2rem; }
-  .masthead-rule { border: none; border-top: 1px solid var(--rule); margin: 1.25rem 0 0; width: 100%; }
-
-  .issue-banner { background: var(--teal); color: rgba(255,255,255,0.9); text-align: center; padding: 0.55rem 2rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; }
-
-  /* LAYOUT */
-  .main-wrap { max-width: 960px; margin: 0 auto; padding: 3rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
-
-  /* LEAD */
-  .lead-story { border-bottom: 1px solid var(--rule); padding-bottom: 2.5rem; margin-bottom: 2.5rem; }
-  .story-kicker { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; }
-  .lead-hed { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight: 500; line-height: 1.2; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
-  .lead-hed em { font-style: italic; color: var(--teal); }
-  .lead-dek { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.7; max-width: 54ch; margin-bottom: 1.25rem; font-weight: 300; }
-  .byline { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 0.75rem; }
-  .byline::before { content: ''; display: block; width: 20px; height: 1px; background: var(--rule); }
-
-  /* SECTION HEADER */
-  .section-header { display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 1.75rem; }
-  .section-num { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.1em; }
-  .section-header h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
-
-  /* SECTION DESCRIPTION */
-  .section-desc { font-size: 0.84rem; color: var(--ink-soft); line-height: 1.65; margin-bottom: 1.5rem; max-width: 52ch; font-weight: 300; }
-  .section-desc em { font-style: italic; color: var(--ink-mid); }
-
-  /* RESEARCH GRID */
-  .research-section { border-bottom: 1px solid var(--rule); padding-bottom: 2.5rem; margin-bottom: 2.5rem; }
-  .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
-  .research-card { background: var(--cream); padding: 1.5rem; transition: background 0.15s; }
-  .research-card:hover { background: var(--cream-2); }
-  .research-icon { width: 40px; height: 40px; border-radius: 3px; background: var(--teal-pale); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 18px; }
-  .research-card h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; line-height: 1.3; }
-  .research-card p { font-size: 0.84rem; color: var(--ink-mid); line-height: 1.65; }
-
-  /* WRITING LIST */
-  .writing-section { border-bottom: 1px solid var(--rule); padding-bottom: 2.5rem; margin-bottom: 2.5rem; }
-  .posts-list { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
-  .post-row { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.25rem 1.5rem; background: var(--cream); border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; transition: background 0.15s; }
-  .post-row:last-child { border-bottom: none; }
-  .post-row:hover { background: var(--cream-2); }
-  .post-date { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.5; text-align: right; }
-  .post-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; color: var(--ink); line-height: 1.35; }
-  .post-title em { font-style: italic; color: var(--teal); }
-  .post-tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); background: var(--teal-pale); border: 1px solid var(--teal-border); padding: 3px 9px; border-radius: 2px; white-space: nowrap; }
-
-  /* RESEARCH TOPICS GRID */
-  .topics-section { border-bottom: 1px solid var(--rule); padding-bottom: 2.5rem; margin-bottom: 2.5rem; }
-  .topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
-  .topic-card { padding: 1.4rem; border-bottom: 1px solid var(--rule); border-right: 1px solid var(--rule); background: var(--cream); transition: background 0.15s; text-decoration: none; color: inherit; display: block; }
-  .topic-card:hover { background: var(--cream-2); }
-  .topic-card:nth-child(2n) { border-right: none; }
-  .topic-card:nth-last-child(-n+2) { border-bottom: none; }
-  .topic-kicker { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 0.5rem; display: block; }
-  .topic-card h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; line-height: 1.3; color: var(--ink); margin-bottom: 0.45rem; }
-  .topic-card p { font-size: 0.81rem; color: var(--ink-soft); line-height: 1.6; font-weight: 300; }
-
-  /* SIDEBAR */
-  .sidebar { border-left: 1px solid var(--rule); padding-left: 2rem; }
-  .sidebar-block { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--rule); }
-  .sidebar-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .sidebar-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
-  .author-card { text-align: center; }
-  .author-initial { width: 60px; height: 60px; border-radius: 50%; background: var(--teal); color: white; font-family: var(--serif); font-size: 1.6rem; font-style: italic; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.9rem; }
-  .author-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.25rem; color: var(--ink); }
-  .author-role { font-size: 0.74rem; color: var(--ink-soft); margin-bottom: 0.75rem; line-height: 1.5; }
-  .author-bio { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.65; text-align: left; }
-  .award-pill { background: var(--gold-pale); border: 1px solid #e8cc7a; border-radius: 3px; padding: 0.7rem 0.9rem; margin-top: 0.9rem; font-size: 0.78rem; color: var(--gold); line-height: 1.5; text-align: left; }
-  .award-pill strong { display: block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 0.2rem; font-family: var(--mono); }
-  .stat-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
-  .stat-box { background: var(--cream-2); border: 1px solid var(--rule); border-radius: 3px; padding: 0.75rem; text-align: center; }
-  .stat-num { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; color: var(--ink); display: block; line-height: 1; margin-bottom: 0.25rem; }
-  .stat-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); line-height: 1.4; }
-  .badge-group { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .badge { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; border: 1px solid var(--rule); color: var(--ink-soft); background: var(--cream-2); }
-  .badge.teal { background: var(--teal-pale); border-color: var(--teal-border); color: var(--teal); }
-  .topic-list { list-style: none; }
-  .topic-list li { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); font-size: 0.82rem; color: var(--ink-mid); }
-  .topic-list li:last-child { border-bottom: none; }
-  .topic-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal-mid); flex-shrink: 0; }
-
-  /* ABOUT STRIP */
-  .about-strip { background: var(--ink); color: var(--cream); padding: 4rem 2.5rem; }
-  .about-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
-  .about-strip .eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8ab5a8; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
-  .about-strip .eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #8ab5a8; }
-  .about-strip h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; color: var(--cream); line-height: 1.2; margin-bottom: 1rem; }
-  .about-strip p { font-size: 0.88rem; line-height: 1.75; color: #b8b4ac; margin-bottom: 0.9rem; }
-  .about-strip p:last-child { margin-bottom: 0; }
-  .timeline { list-style: none; }
-  .timeline li { display: grid; grid-template-columns: 88px 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.84rem; }
-  .timeline li:last-child { border-bottom: none; }
-  .tl-year { font-family: var(--mono); font-size: 0.65rem; color: #8ab5a8; letter-spacing: 0.08em; padding-top: 3px; text-transform: uppercase; }
-  .tl-text { color: #c8c4bc; line-height: 1.55; }
-  .tl-text strong { color: var(--cream); font-weight: 400; }
-
-  /* FOOTER */
-  footer { border-top: 1px solid var(--rule); padding: 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-  .footer-brand { display: flex; flex-direction: column; gap: 0.1rem; }
-  .footer-name { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-mid); font-weight: 500; }
-  .footer-sub { font-family: var(--serif); font-size: 0.78rem; color: var(--ink-faint); font-style: italic; }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--teal); }
-
-  /* RESPONSIVE */
-  @media (max-width: 720px) {
-    nav { padding: 0 1.25rem; }
-    .nav-links { gap: 1.25rem; }
-    .masthead-top { padding: 2rem 1.25rem 1rem; }
-    .main-wrap { grid-template-columns: 1fr; padding: 2rem 1.25rem; gap: 2rem; }
-    .sidebar { border-left: none; padding-left: 0; border-top: 2px solid var(--rule); padding-top: 2rem; }
-    .research-grid, .topics-grid { grid-template-columns: 1fr; }
-    .post-row { grid-template-columns: 60px 1fr; gap: 0.75rem; }
-    .post-tag { display: none; }
-    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .about-strip { padding: 3rem 1.25rem; }
-    footer { flex-direction: column; gap: 1rem; padding: 1.25rem; }
-    .footer-brand { align-items: center; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-logo">Patricia Cruz</a>
-  <ul class="nav-links">
-    <li><a href="research.html">Research</a></li>
-    <li><a href="writing.html">Writing</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
-
-<header class="masthead">
-  <div class="masthead-top">
-    <p class="masthead-eyebrow">Research blog &amp; notes</p>
-    <h1 class="masthead-name">Patricia Cruz</h1>
-    <p class="masthead-subtitle">Cognitive Loop — notes on human–AI learning</p>
-    <p class="masthead-affil">MSc Computational Social Science &nbsp;·&nbsp; Linköping University &nbsp;·&nbsp; Swedish Institute Scholar</p>
-    <hr class="masthead-rule">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="name" href="index.html">Patricia Cruz</a>
+    <nav aria-label="Main">
+    <ul>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="writing.html">Notes</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    </nav>
   </div>
 </header>
-
-<div class="issue-banner">
-  Exploring cognition, agency &amp; literacy in AI-mediated education
-</div>
-
-<div class="main-wrap">
-  <main>
-
-    <!-- LEAD -->
-    <div class="lead-story">
-      <p class="story-kicker">Site mission</p>
-      <h2 class="lead-hed">When students talk to AI,<br><em>what are they really learning?</em></h2>
-      <p class="lead-dek">This blog documents my journey through the intersection of generative AI and human cognition. I write about how students develop agency, metacognition, and critical literacy when AI becomes part of their learning process — and what that means for how we design education.</p>
-      <p class="byline">Patricia Cruz &nbsp;·&nbsp; MSc Computational Social Science &nbsp;·&nbsp; Linköping University</p>
-    </div>
-
-    <!-- 01 RESEARCH INTERESTS -->
-    <div class="research-section" id="research">
-      <div class="section-header">
-        <span class="section-num">01</span>
-        <h2>Research interests</h2>
-      </div>
-      <div class="research-grid">
-        <div class="research-card">
-          <div class="research-icon">🧠</div>
-          <h3>Metacognition &amp; AI</h3>
-          <p>How reflective interaction logs with generative AI can surface and strengthen metacognitive awareness in learners.</p>
-        </div>
-        <div class="research-card">
-          <div class="research-icon">⚡</div>
-          <h3>Agency in AI-mediated learning</h3>
-          <p>Whether and how students develop critical thinking and self-directed learning when generative AI mediates their study process.</p>
-        </div>
-        <div class="research-card">
-          <div class="research-icon">📖</div>
-          <h3>AI Literacy</h3>
-          <p>Understanding AI not only as a tool but as an object of critical awareness — the cognitive and socio-ethical dimensions of being AI-literate.</p>
-        </div>
-        <div class="research-card">
-          <div class="research-icon">🌐</div>
-          <h3>Equity &amp; Access</h3>
-          <p>Technology as a lever for expanding educational access, drawing from work with low-income communities and project-based learning design.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 02 WRITING — personal essays & blog posts -->
-    <div class="writing-section" id="writing">
-      <div class="section-header">
-        <span class="section-num">02</span>
-        <h2>Writing</h2>
-      </div>
-      <p class="section-desc">
-        Personal essays, reflections and notes — <em>my voice</em>, not formal research. Short pieces on what I'm reading, thinking, and observing about human–AI learning.
-      </p>
-      <div class="posts-list">
-        <a href="post-ai-interaction-logs.html" class="post-row">
-          <div class="post-date">Apr<br>2025</div>
-          <div class="post-title">Can AI interaction logs help learners <em>see their own thinking?</em></div>
-          <span class="post-tag">Research</span>
-        </a>
-        <a href="#" class="post-row">
-          <div class="post-date">Coming<br>soon</div>
-          <div class="post-title">What does it mean to learn <em>with</em> an AI, not from one?</div>
-          <span class="post-tag">Essay</span>
-        </a>
-        <a href="#" class="post-row">
-          <div class="post-date">Coming<br>soon</div>
-          <div class="post-title">Teaching children to think computationally — lessons from a decade in classrooms</div>
-          <span class="post-tag">Practice</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- 03 RESEARCH IN PROGRESS — academic topics -->
-    <div class="topics-section" id="topics">
-      <div class="section-header">
-        <span class="section-num">03</span>
-        <h2>Research in progress</h2>
-      </div>
-      <p class="section-desc">
-        Longer-form academic work — papers, thesis chapters, and formal research notes. These take more time and rigour than blog posts, and some are still being shaped.
-      </p>
-      <div class="topics-grid">
-        <a href="#" class="topic-card">
-          <span class="topic-kicker">Metacognition</span>
-          <h3>Can AI interaction logs help learners see their own thinking?</h3>
-          <p>Interaction logs as a methodological and pedagogical tool for metacognitive development.</p>
-        </a>
-        <a href="#" class="topic-card">
-          <span class="topic-kicker">Agency</span>
-          <h3>Do students become more or less independent when using generative AI?</h3>
-          <p>Examining how AI-mediated decisions shape cognitive autonomy in the classroom.</p>
-        </a>
-        <a href="#" class="topic-card">
-          <span class="topic-kicker">Literacy</span>
-          <h3>Beyond the tool: what it means to be AI-literate</h3>
-          <p>Critical awareness, responsibility, and the socio-ethical dimensions of knowing how AI works.</p>
-        </a>
-        <a href="#" class="topic-card">
-          <span class="topic-kicker">Methods</span>
-          <h3>Using interaction data to study human reasoning with AI</h3>
-          <p>What AI conversation logs reveal about the patterns hidden in how people think with machines.</p>
-        </a>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-block">
-      <p class="sidebar-label">About</p>
-      <div class="author-card">
-        <div class="author-initial">P</div>
-        <p class="author-name">Patricia Cruz</p>
-        <p class="author-role">MSc Computational Social Science<br>Linköping University</p>
-        <p class="author-bio">Former IT department lead and technology teacher. I study how humans learn <em>with</em> AI, not just from it — combining computational methods with the science of behaviour and cognition.</p>
-        <div class="award-pill">
-          <strong>Swedish Institute Scholarship</strong>
-          Awarded for academic excellence and commitment to positive societal impact.
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-block">
-      <p class="sidebar-label">At a glance</p>
-      <div class="stat-pair">
-        <div class="stat-box">
-          <span class="stat-num">8+</span>
-          <span class="stat-label">Years in tech education</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num">MSc</span>
-          <span class="stat-label">Comp. Social Science</span>
-        </div>
-      </div>
-      <div class="badge-group">
-        <span class="badge teal">Human–AI Interaction</span>
-        <span class="badge teal">Metacognition</span>
-        <span class="badge">AI Literacy</span>
-        <span class="badge">EdTech</span>
-        <span class="badge">Comp. Social Science</span>
-      </div>
-    </div>
-
-    <div class="sidebar-block">
-      <p class="sidebar-label">Research themes</p>
-      <ul class="topic-list">
-        <li><span>Human–AI interaction</span><span class="topic-dot"></span></li>
-        <li><span>Metacognition &amp; reflection</span><span class="topic-dot"></span></li>
-        <li><span>AI literacy</span><span class="topic-dot"></span></li>
-        <li><span>Agency in learning</span><span class="topic-dot"></span></li>
-        <li><span>Educational equity</span><span class="topic-dot"></span></li>
-        <li><span>Computational thinking</span><span class="topic-dot"></span></li>
-      </ul>
-    </div>
-
-    <div class="sidebar-block">
-      <p class="sidebar-label">Current work</p>
-      <p style="font-size:0.8rem;color:var(--ink-soft);line-height:1.65;">Semester 2 of the MSc. Thesis begins next academic year — exploring reflective AI interaction logs as tools for metacognitive development in AI-mediated learning.</p>
-    </div>
-
-    <div class="sidebar-block">
-      <p class="sidebar-label">The name</p>
-      <p style="font-size:0.8rem;color:var(--ink-soft);line-height:1.65;"><em style="color:var(--ink-mid);">Cognitive Loop</em> — the iterative feedback between a learner's mind and an AI system, each shaping the other's next move.</p>
-    </div>
-  </aside>
-</div>
-
-<!-- ABOUT STRIP -->
-<div class="about-strip" id="about">
-  <div class="about-inner">
+<main id="main">
+<section class="hero">
+  <div class="wrap">
     <div>
-      <p class="eyebrow">About</p>
-      <h2>Where research meets practice</h2>
-      <p>I combine formal academic training in computational social science with nearly a decade of hands-on experience designing learning environments — from running an IT department to teaching programming in underserved communities.</p>
-      <p>My thesis, beginning next academic year, will examine how students develop agency and AI literacy when using generative AI as a learning partner.</p>
+      <h1>Patricia Cruz</h1>
+      <p class="tagline">Computational social science and AI learning</p>
+      <p class="lede">I study how social and economic differences shape who uses, trusts and learns with AI. I program fluently in Python and R, and I work with survey data, social networks and text.</p>
+      <p class="lede">Before my MSc I spent eight years running IT and support at a school in Brazil, four of them also teaching programming. I hold degrees in computer science, systems analysis and development, science and technology, and law.</p>
+      <p class="facts">MSc Computational Social Science, Linköping University. Swedish Institute Scholar. Research intern at the Institute for Analytical Sociology.</p>
+      <div class="actions">
+        <a class="btn primary" href="research.html">See my research</a>
+        <a class="btn" href="https://github.com/patriciagvrt">GitHub</a>
+        <a class="btn" href="contact.html">Get in touch</a>
+      </div>
     </div>
-    <ul class="timeline">
-      <li>
-        <span class="tl-year">2025–now</span>
-        <span class="tl-text"><strong>MSc Computational Social Science</strong> · Linköping University. Courses in Data Analysis &amp; Behavioural Mechanisms in Social Science.</span>
-      </li>
-      <li>
-        <span class="tl-year">2025</span>
-        <span class="tl-text"><strong>Swedish Institute Scholarship</strong> · Awarded for academic merit and commitment to positive societal impact.</span>
-      </li>
-      <li>
-        <span class="tl-year">Prior</span>
-        <span class="tl-text"><strong>IT Department Lead &amp; Technology Teacher</strong> · Project-based learning, AI-inspired Scratch activities, computational thinking curricula.</span>
-      </li>
-      <li>
-        <span class="tl-year">Non-profit</span>
-        <span class="tl-text"><strong>Programming &amp; English teacher</strong> · Low-income communities. High engagement, measurable coding outcomes, student-built games.</span>
-      </li>
+    <figure class="method-map">
+  <svg viewBox="0 0 400 320" role="img" aria-labelledby="mm-t mm-d">
+    <title id="mm-t">Methods I work with</title>
+    <desc id="mm-d">Five methods: surveys, networks, text, simulation and education research. Lines join methods that meet in one project: survey distance matrices, network diffusion models, adolescent friendship networks, an AI literacy study, and an analysis of university AI guidance.</desc>
+    <g class="link"><title>Distance matrices from survey data (research internship)</title>
+      <line class="edge" x1="80" y1="70" x2="315" y2="70"/><line class="edge-hit" x1="80" y1="70" x2="315" y2="70"/></g>
+    <g class="link"><title>Diffusion on small-world, scale-free and random networks (NetLogo)</title>
+      <line class="edge" x1="315" y1="70" x2="205" y2="285"/><line class="edge-hit" x1="315" y1="70" x2="205" y2="285"/></g>
+    <g class="link"><title>Friendship networks among secondary-school students (RSiena)</title>
+      <line class="edge" x1="315" y1="70" x2="75" y2="235"/><line class="edge-hit" x1="315" y1="70" x2="75" y2="235"/></g>
+    <g class="link"><title>AI use and trust among university students (proposal)</title>
+      <line class="edge" x1="80" y1="70" x2="75" y2="235"/><line class="edge-hit" x1="80" y1="70" x2="75" y2="235"/></g>
+    <g class="link"><title>How Nordic universities write about generative AI</title>
+      <line class="edge" x1="330" y1="235" x2="75" y2="235"/><line class="edge-hit" x1="330" y1="235" x2="75" y2="235"/></g>
+    <circle class="node" cx="80" cy="70" r="8"/><text x="80" y="48" text-anchor="middle">Surveys</text>
+    <circle class="node" cx="315" cy="70" r="8"/><text x="315" y="48" text-anchor="middle">Networks</text>
+    <circle class="node" cx="330" cy="235" r="8"/><text x="330" y="262" text-anchor="middle">Text</text>
+    <circle class="node" cx="205" cy="285" r="8"/><text x="205" y="312" text-anchor="middle">Simulation</text>
+    <circle class="node" cx="75" cy="235" r="8"/><text x="75" y="262" text-anchor="middle">Education</text>
+  </svg>
+  <figcaption>Each line is a project that joins two methods.</figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-top"><h2>Highlights</h2><a href="about.html">Full background</a></div>
+    <ul class="record">
+  <li><span class="when">2026</span><div>
+    <h3>Supervised research internship, Institute for Analytical Sociology</h3>
+    <p>Linköping University. Working on a method that places survey-based distance matrices on the surface of a sphere and tests whether it preserves them better than flat PCA and MDS maps.</p></div></li>
+  <li><span class="when">2026</span><div>
+    <h3>Working paper: Who Accepts AI at Work?</h3>
+    <p>Independent, survey-weighted analysis of 26,404 respondents across the EU27 using Special Eurobarometer 554.</p></div></li>
+  <li><span class="when">2026</span><div>
+    <h3>Nordic University AI Policy Tracker</h3>
+    <p>Designed and built an open-source Python pipeline that collects and codes university guidance on generative AI in five Nordic countries.</p></div></li>
+  <li><span class="when">2026</span><div>
+    <h3>Conference volunteer, Computational Social Science</h3>
+    <p>Supported the organisation of an international academic conference at Linköping University in August.</p></div></li>
+  <li><span class="when">2024</span><div>
+    <h3>Education &amp; Technology Impact Award<span class="badge">Award</span></h3>
+    <p>For the programming course I designed and taught at the Decolar NGO for students from low-income communities in Brazil.</p></div></li>
+  <li><span class="when">2024</span><div>
+    <h3>Swedish Institute Scholarship<span class="badge">Scholarship</span></h3>
+    <p>Awarded to international students with strong academic records and leadership potential. Funds my MSc at Linköping University.</p></div></li>
+</ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-top"><h2>Selected research</h2><a href="research.html">All projects</a></div>
+    <div class="projects">
+      <article class="project"><div>
+        <span class="status">In progress</span>
+        <h3><a href="research.html">Spherical maps of survey-based distance matrices</a></h3>
+        <p>Flat PCA and MDS maps distort distances between respondents, parties or countries. I test whether placing the same distance matrix on the surface of a sphere preserves it better, comparing Kruskal stress across both approaches.</p>
+      </div><dl class="meta"><dt>Data</dt><dd>European Social Survey, Swedish party survey data</dd><dt>Setting</dt><dd>Supervised research internship</dd></dl></article>
+      <article class="project"><div>
+        <span class="status">Working paper in progress</span>
+        <h3><a href="https://github.com/patriciagvrt/eurobarometer-ai-attitudes">Who accepts AI at work?</a></h3>
+        <p>Across the EU, how comfortable people feel with AI at work depends far more on their own digital skills than on education or age. People who have already met AI at work are more accepting, and financial precarity lowers acceptance in a way digital skills do not explain.</p>
+      </div><dl class="meta"><dt>Data</dt><dd>Special Eurobarometer 554, n = 26,404</dd><dt>Tools</dt><dd>R, Quarto</dd></dl></article>
+      <article class="project"><div>
+        <span class="status">Pilot</span>
+        <h3><a href="https://github.com/patriciagvrt/AI-Policy-Tracker">Nordic University AI Policy Tracker</a></h3>
+        <p>A reproducible pipeline that collects and codes official university guidance on generative AI. It scores each policy on two separate axes, restriction and pedagogical support, instead of a single strict versus permissive scale.</p>
+      </div><dl class="meta"><dt>Scope</dt><dd>Five universities, one per Nordic country</dd><dt>Tools</dt><dd>Python, spaCy, BERTopic, Streamlit</dd></dl></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-top"><h2>Notes</h2><a href="writing.html">All notes</a></div>
+    <ul class="notes">
+  <li><a href="post-digital-skills-ai-work.html">
+    <span class="when">September 2026</span>
+    <span><h3>Digital skills, not diplomas: who feels ready for AI at work?</h3>
+    <p>What a survey of more than 26,000 Europeans says about who accepts AI at work, and why that turns AI literacy into a question of inequality.</p></span>
+  </a></li>
+  <li><a href="post-university-ai-guidance.html">
+    <span class="when">September 2026</span>
+    <span><h3>Strict or supportive? Why university AI policies need two scores</h3>
+    <p>Most talk about university AI rules sorts them into strict or permissive. Reading the documents themselves, I think that misses how they actually work.</p></span>
+  </a></li>
+</ul>
+  </div>
+</section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p>&copy; 2026 Patricia Cruz. Computational Social Science, Linköping University.</p>
+    <ul>
+      <li><a href="https://github.com/patriciagvrt">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/YOUR-LINKEDIN">LinkedIn</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
-</div>
-
-<footer>
-  <div class="footer-brand">
-    <span class="footer-name">Patricia Cruz</span>
-    <span class="footer-sub">Cognitive Loop — notes on human–AI learning</span>
-  </div>
-  <div class="footer-links">
-    <a href="https://github.com" target="_blank">GitHub</a>
-    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-    <a href="contact.html">Contact</a>
-  </div>
 </footer>
-
 </body>
 </html>
