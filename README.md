@@ -13,10 +13,9 @@ Site pessoal de Patricia Cruz, publicado no GitHub Pages.
 - `post-template.html` e `admin.html` : para criar novos posts
 
 ## Antes de publicar (TODO)
-1. Trocar `your.email@example.com` em `contact.html`
-2. Trocar `YOUR-LINKEDIN` em todas as páginas (busque por `YOUR-LINKEDIN`)
-3. Criar um formulário grátis em formspree.io e trocar `YOUR_FORM_ID` em `contact.html`
-4. Conferir os anos marcados com `TODO` em `about.html`
+1. Trocar `YOUR-LINKEDIN` em todas as páginas (busque por `YOUR-LINKEDIN`)
+2. Criar um formulário grátis em formspree.io com o email patricia@pcruzresearch.com e trocar `YOUR_FORM_ID` em `contact.html`
+3. Conferir os anos marcados com `TODO` em `about.html`
 
 ## Como adicionar um post
 1. Abra `admin.html` no navegador, escreva o post e clique em Download
